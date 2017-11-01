@@ -1,0 +1,1 @@
+This plugin is to connect AWS Cognito API to the wordpress and allow user create their own AWS Cognito login form.

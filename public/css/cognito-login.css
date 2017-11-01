@@ -1,0 +1,176 @@
+/**
+ * All of the CSS for public-facing functionality
+ * included in this file.
+ */
+ 
+ 
+ 
+ 
+ /**
+ * Styling for cognito login button 
+ */
+.css-aws-login{
+    background: url("../img/aws-icon.png") no-repeat 10px center;
+    background-color: white; 
+    background-size: 25px 25px, cover;
+    line-height: 1;
+    display: block;
+    padding-left: 50px;
+    color: #421C52 !important;
+    text-decoration: none !important;
+    transition: opacity .3s ease-in;
+    border: 1px solid gray;
+	border-color: #732C7B #9C8AA5  #732C7B;
+	border-radius: 3px;
+    opacity: .90;
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto 16px;
+}
+a.css-aws-login:hover{
+    background-color: #BDAEC6 ;
+    color: #732C7B;
+    opacity: 1;
+}
+a.css-aws-login div {
+    height: 45px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.css-aws-login img{
+    display: none;
+    width: 20px;
+    right: 6px;
+    top: 31%;
+    position: absolute;
+    height: auto;
+}
+.text-or{
+	text-align:center;
+	padding-top:5%;
+	padding-bottom:8%;
+}
+
+
+
+
+
+
+ /**
+ * Styling for cognito login form
+ */
+ .aws-cognito-form{
+    position:relative;
+    background: rgba(255, 255, 255, 0.9) ;
+    width: 40%;
+    margin:auto;
+    margin-top:10%;
+    padding: 5%;
+    padding-bottom:1%;
+}
+.aws-cognito-register-box{
+    display:none;
+}
+.aws-cognito-message-center{
+    font-size: 90%;
+    text-align: center;
+}
+.aws-cognito-register-button,
+.aws-cognito-login-button,
+.aws-cognito-forgot-button,
+.aws-cognito-confirm-verification-button,
+.aws-cognito-confirm-forgot-button,
+.aws-cognito-forgot-verification-button
+{
+	margin-top:10%;
+    width:100% ;
+}
+.aws-cognito-message-left{
+     text-align:left;
+}
+.aws-cognito-forgot-label{
+    font-weight: lighter ;
+    font-size: 70%;
+    float: right;
+    padding: 0 ;
+    margin: 0;
+    margin-top: 1%;
+    cursor: pointer;
+}
+.aws-cognito-forgot-box{
+   display:none;
+}
+.aws-cognito-forgot-verification-box{
+   display:none;
+}
+.aws-cognito-cancel-button{
+    background:gray;
+	width:100% ;
+}
+.aws-cognito-cancel-button:hover,
+.aws-cognito-register-button:hover,
+.aws-cognito-login-button:hover,
+.aws-cognito-forgot-button:hover,
+.aws-cognito-confirm-verification-button:hover,
+.aws-cognito-forgot-verification-button:hover
+{    
+    opacity:0.8;
+}
+.aws-cognito-confirm-box{
+    display:none;
+}
+.aws-cognito-input-field{
+	margin-top:5%;
+}
+.aws-cognito-loader-box{
+	display:none;
+	z-index:10;
+	position:fixed;
+	height:100vh;
+	width:100vw;
+	top:0;
+	left:0;
+	background-color: rgba(0, 0, 0, 0.3);	
+}
+.aws-cognito-loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid gray;
+  width: 60px;
+  height: 60px;
+  position:fixed;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:auto; 
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+ /**
+ * Styling for responsive cognito login form ( mobile ) 
+ */
+@media only screen and (max-width: 768px) {
+	 .aws-cognito-form{
+		position:relative;
+		background: rgba(255, 255, 255, 0.9) ;
+		width: 85%;
+		margin:auto;
+		margin-top:10%;
+		padding: 5%;
+		padding-bottom:1%;
+	}
+
+}
+

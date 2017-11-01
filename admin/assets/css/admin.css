@@ -1,0 +1,31 @@
+/**
+ *  Main css style for plugin setting page
+ */		
+hr{
+	width:50%;
+	float:left;
+
+}
+.aws-cognito-setting-box{	
+}
+.aws-cognito-setting-table{
+
+}
+.aws-cognito-setting-table td{	
+	padding-left:10%;
+    padding-bottom: 4%;
+}	
+td.table-shortcode-row {
+	padding-left:0%;
+    color: #0073aa;
+    font-weight: bold;	
+}
+
+/**
+ *  Styling for responsive page (mobile) 
+ */	
+@media only screen and (min-width: 768px) {
+.aws-cognito-setting-box input[type="password"], 
+.aws-cognito-setting-box input[type="text"]{
+	width:40%;
+}

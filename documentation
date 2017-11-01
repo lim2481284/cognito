@@ -1,0 +1,284 @@
+---------------------------------------------------
+
+Cognito Login Plugin file and folder structure and description 
+
+---------------------------------------------------
+
+	> admin 	: Main folder to handle admin view ( setting page ) 
+
+		> assets  : Contain supporting assets file for setting page 
+
+			> css  : Contain css file for setting page 
+
+				- admin.css		: Styling the setting page UI form 
+				  * register/call from class-cognito-login-admin.php enqueue_admin_styles() function * 
+
+
+		> partials 	: Contain input section html code for setting page 
+
+			- settings-user-pool-id-field.php	: User pool id input field html code 
+			  * register/call from class-cognito-login-settings.php display_user_pool_id() function *
+
+			- settings-client-id-field.php		: Client id input field html code
+			  * register/call from class-cognito-login-settings.php display_client_id() function *
+
+			- settings-display-login-field.php		: Display login button in login form option field html code
+			  * register/call from class-cognito-login-settings.php display_login_button() function *
+			  
+			- settings-display-login-url-field.php		: Login url field html code 
+			  * register/call from class-cognito-login-settings.php display_login_url() function *
+
+			- settings-display-customization-input-field.php		: Login input field extra class name field html code
+			  * register/call from class-cognito-login-settings.php display_customization_input() function *
+
+			- settings-display-customization-form-field.php		: Login form extra class name html code
+			  * register/call from class-cognito-login-settings.php display_customization_form() function *		
+			  
+			- settings-display-customization-button-field.php		: Login form button extra class name html code
+			  * register/call from class-cognito-login-settings.php display_customization_button() function *		
+
+			- settings-display-role-field.php		: User role html code
+			  * register/call from class-cognito-login-settings.php display_role_setting() function *					  
+			  
+			  
+		> views 	: Main setting page UI view 
+
+			- settings-page.php		:  Main page to display setting page UI form
+			  * trigger and call from class-cognito-login-admin.php  display_settings_page() function *
+
+
+		- class-cognito-login-admin.php		: Mainly used to define hook and action, register menu item and register styling 
+		  * call from class-cognito-login.php  load_dependencies() function *
+
+
+		- class-cognito-login-settings.php	: Mainly used to register input field section, register wordpress database option row, and assign database value to setting page
+		  * call from class-cognito-login.php load_dependencies() function *
+
+
+	> includes 		: Contain this plugin main core file and sharing between admin and public
+
+		- class-aws-upgrader.php		: Check current plugin version and upgrade the plugin version 
+		  * trigger from class-cognito-login-activator.php  activate() function , call from cognito-login.php activate_cognito_login() function * 
+
+
+		- class-cognito-login.php		: Core plugin class, include all the attribute and function, define all the hook, load all the dependencies 
+		  * trigger and call from cognito-login.php *
+			
+
+		- class-cognito-login-activator.php	: Fired during plugin activation, check current plugin version and upgrade to latest version 
+		  * trigger and call from cognito-login.php activate_cognito_login() function *
+ 
+
+		- class-cognito-login-deactivator.php	: Fired during plugin deactivation, currently do nothing 
+		  * trigger and call from cognito-login.php deactivate_cognito_login() function * 
+
+	
+		- class-cognito-login-loader.php	: Register and execute all actions and filters for the plugin
+		  * call from class-cognito-login.php load_dependencies() function *		  
+
+
+		- class-cognito-login-shortcodes.php	: Register shortcode for this plugin
+		  * call from class-cognito-login.php load_dependencies() *
+
+
+	> public 	: Main folder to handle public view ( login form and login button ) 
+
+		> css	: Contain css file for public view ( login form and login button ) 
+
+			- cognito-login.css	: Styling the wordpress login page login button 
+			  * register/call from class-cognito-login-public.php enqueue_styles() function * 
+
+
+		> img  : Contain image use by public view 
+
+			- aws-icon.png		: AWS cognito logo icon			  
+
+
+		> js  	: Contain main js file for public view ( login form and login button ) 
+
+			- amazon-cognito-identity.min.js 	:	Simplify AWS Cognito core JS file 
+			  * register/call from class-cognito-login-public.php  enqueue_scripts() function * 
+			  
+			- aws-cognito-sdk.min.js 	: 	Core JS file that contain AWS Cognito function 
+			  * register/call from class-cognito-login-public.php  enqueue_scripts() function * 
+			  			  
+			- cognito-login.js	:  Main JS file that contain AWS Cognito API and trigger the AJAX call to wordpress 
+			  * register/call from class-cognito-login-public.php  enqueue_scripts() function * 
+
+
+		- class-cognito-login-public.php: Mainly used to handle AJAX function and response, register script and style and contain function used by public view ( login form and button )  
+			  * trigger and call from class-cognito-login.php load_dependencies() function * 
+
+
+	- uninstall.php 	: Fired when the plugin is uninstall, to check if uninstall is call from wordpress 	  
+
+
+	- cognito-login.php	: Plugin index file, register wordpress plugin, all the required file are call from here and run a plugin instance 		
+	
+	
+	
+	
+
+
+---------------------------------------------------
+
+How to add new html code in setting page 
+
+---------------------------------------------------	
+
+1 - In the settings-page.php page , add your own html code under corresponding tab 
+	
+---------------------------------------------------
+
+How to add new setting section in setting page  
+
+---------------------------------------------------
+
+1 - Add custom field : In the class-cognito-login-settings.php page under construct() , add : 
+	
+		$this->your_fields   = array(
+			'your_function_name'       => 'your input field name'
+		);	
+
+	
+2 - Register setting section in wordpress database : At the same page under register() function, add : 
+
+		add_settings_section(
+			'your_setting_id',			// ID of the settings section
+			'Your setting title',  			// Title of the section
+			'',
+			'your_setting_page_id'		// ID of the page
+		);
+		
+		
+		foreach( $this->your_fields as $key => $name) {
+			add_settings_field(
+				$key,        // The ID of the settings field
+				$name,                // The name of the field of setting(s)
+				array( $this, 'display_'.$key ),
+				'your_setting_id',        // ID of the page on which to display these fields
+				'your_setting_page_id'            // The ID of the setting section
+			);
+		}		
+
+3 - Add section function : At the same page , add your own function below 
+
+		public function your_function_name() { //your code here } 
+
+	
+---------------------------------------------------
+
+How to register input field to wordpress database in setting page  
+
+---------------------------------------------------
+
+
+1 - Register a row in wordpress database to store and get database value: In the class-cognito-login-settings.php page under register() function, add : 
+
+		register_setting(
+			'your_row_name',		// Group of options
+			'your_row_name',     	        // Name of options
+			array( $this, 'sanitize' )	// Sanitization function
+		);
+
+2 - Update row value from input field 
+
+		<form method="post" action="options.php">
+			<input type="text" name="your_row_name[your_data_name]"  />
+			submit_button();
+		</form>
+		
+3 - To get row value 
+
+		$opts = get_option( 'your_row_name' );
+		$your_data_name = isset( $opts['your_data_name'] ) ? $opts['your_data_name'] : '';
+	
+	
+---------------------------------------------------
+
+How to add new shortcode 
+
+---------------------------------------------------
+
+1 - In the class-cognito-login-shortcodes.php page , at the register_shortcodes function add :
+		add_shortcode('your_shortcode_name',  array( $this, 'your_shortcode_function' ));
+		
+2 - At the same page , add 'your_shortcode_function' below :
+		public function login_button(){	//your function code }
+	
+---------------------------------------------------
+
+How to change menu item name
+
+---------------------------------------------------
+
+1 - In the class-cognito-login-admin.php it have add_menu_items function that handle menu item creation 
+	modify the parameter in that function to change menu item name 
+
+	
+---------------------------------------------------
+
+How to add new tab in setting page 
+
+---------------------------------------------------
+
+1 - In the settings-page.php , under <h2 class="nav-tab-wrapper"> add :
+		<a href="?page=cognito_login&tab=your_tab_name" class="nav-tab <?php echo $active_tab == 'your_tab_name' ? 'nav-tab-active' : ''; ?>">your_tab_name</a>
+		
+2 - At the same page , under <div class='aws-cognito-setting-box'> add : 
+		else if ( $active_tab == 'your_tab_name' ) { // your code here  }
+		
+		
+---------------------------------------------------
+
+How to add new AJAX call in wordpress 
+
+---------------------------------------------------		
+
+1 - In the cognito-login.js page , add your own AJAX function 
+
+		function your_AJAX_function(parameter){
+			jQuery.ajax({
+			 type : "post",
+			 url :cognito_ajax.ajax_url,
+			 data : {
+				 action: "your_AJAX_handle_function_name ", 
+				 parameter_name :parameter_value
+			 },
+			 success: function(response) {
+				// response from the AJAX call 
+				// Example : alert(response.message);
+			 }
+		  });   
+		}
+		
+2 - In the class-cognito-login.php , register your own your_AJAX_handle_function action
+
+	// this is for user without login 
+	$this->loader->add_action( 'wp_ajax_nopriv_your_AJAX_handle_function', $this->aws, 'your_AJAX_handle_function' );
+
+	// this is for logged in user 
+	$this->loader->add_action( 'wp_ajax_your_AJAX_handle_function', $this->aws, 'your_AJAX_handle_function' );
+	
+	
+3 - In the class-cognito-login-public.php , add your own your_AJAX_handle_function
+
+	public function your_AJAX_handle_function() {	
+			
+		// to get parameter value 
+		$parameter_value  = $_POST['parameter_name'];
+		
+		// Example of returning the response 
+		$return = array(
+			'state'	=> "$status",
+			'message'=> "$message"
+		);
+		wp_send_json( $return );
+
+		
+	    // Must die() at the end of the function 
+		die();
+	}	
+
+		
+	
