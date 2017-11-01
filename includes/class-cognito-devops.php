@@ -153,6 +153,7 @@ class Cognito_Devops {
                 // Add our plugin information
                 $response->last_updated = $this->githubAPIResult->published_at;
                 $response->slug = $this->slug;
+				$response->name = $this->pluginData["Name"]; 
                 $response->plugin_name  = $this->pluginData["Name"];
                 $response->version = $this->githubAPIResult->tag_name;
                 $response->author = $this->pluginData["AuthorName"];
@@ -172,10 +173,11 @@ class Cognito_Devops {
                 $response->download_link = $downloadLink;
  
                 // Load Parsedown
-                require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parsedown.php';
+                require_once( plugin_dir_path( __FILE__ ) . "Parsedown.php" );
  
                 // Create tabs in the lightbox
                 $response->sections = array(
+					
                         'Description'   => $this->pluginData["Description"],
                         'changelog'     => class_exists( "Parsedown" )
                                 ? Parsedown::instance()->parse( $this->githubAPIResult->body )
